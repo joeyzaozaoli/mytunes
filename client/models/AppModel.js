@@ -21,5 +21,4 @@ var AppModel = Backbone.Model.extend({
       this.get('songQueue').push(song);
     }, this);
   }
-
 });

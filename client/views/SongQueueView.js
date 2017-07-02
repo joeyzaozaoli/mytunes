@@ -6,7 +6,17 @@ var SongQueueView = Backbone.View.extend({
 
   initialize: function() {
     this.render();
-    this.collection.on('add', this.render, this);
+    this.collection.on('add remove', this.render, this);
+  },
+
+  events: {
+    'click tr td': 'deleteFromQueue'
+  },
+
+  deleteFromQueue: function(e) {
+    var title = e.target.textContent;
+    var toBeDeleted = this.collection.where({title: title});
+    this.collection.remove(toBeDeleted);
   },
 
   render: function() {
@@ -17,7 +27,6 @@ var SongQueueView = Backbone.View.extend({
         return new SongQueueEntryView({model: song}).render();
       })
     );
-    // return this.$el;
   }
 
 });
