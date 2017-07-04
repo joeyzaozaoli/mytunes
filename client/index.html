@@ -24,25 +24,15 @@
 
     <script>
       $(function() {
-        $.ajax({
-          url: 'http://parse.sfm8.hackreactor.com/mytunes/classes/songs',
-          type: 'GET',
-          success: function (data) {
-            console.log('get success');
-            // set up model objects
-            var library = new Songs(data.results);
-            var app = new AppModel({library: library});
+          // set up model objects
+          var library = new Songs();
+          var app = new AppModel({library: library});
 
-            // build a view for the top level of the whole app
-            var appView = new AppView({model: app});
+          // build a view for the top level of the whole app
+          var appView = new AppView({model: app});
 
-            // put the view onto the screen
-            $('body').append(appView.render());
-          },
-          error: function (data) {
-            console.error('get failure', data);
-          }
-        });
+          // put the view onto the screen
+          $('body').append(appView.render());
       });
     </script>
   </body>
