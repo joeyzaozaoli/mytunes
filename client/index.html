@@ -7,6 +7,7 @@
     <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/backbone/backbone.js"></script>
 
+    <script src="env/config.js"></script>
     <script src="data/data.js"></script>
 
     <script src="models/SongModel.js"></script>
@@ -23,15 +24,25 @@
 
     <script>
       $(function() {
-        // set up model objects
-        var library = new Songs(songData);
-        var app = new AppModel({library: library});
+        $.ajax({
+          url: 'http://parse.sfm8.hackreactor.com/mytunes/classes/songs',
+          type: 'GET',
+          success: function (data) {
+            console.log('get success');
+            // set up model objects
+            var library = new Songs(data.results);
+            var app = new AppModel({library: library});
 
-        // build a view for the top level of the whole app
-        var appView = new AppView({model: app});
+            // build a view for the top level of the whole app
+            var appView = new AppView({model: app});
 
-        // put the view onto the screen
-        $('body').append(appView.render());
+            // put the view onto the screen
+            $('body').append(appView.render());
+          },
+          error: function (data) {
+            console.error('get failure', data);
+          }
+        });
       });
     </script>
   </body>
